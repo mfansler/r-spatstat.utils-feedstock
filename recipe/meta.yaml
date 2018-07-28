@@ -1,4 +1,4 @@
-{% set version = "1.8-2" %}
+{% set version = "1.9-0" %}
 
 {% set posix = 'm2-' if win else '' %}
 {% set native = 'm2w64-' if win else '' %}
@@ -12,7 +12,7 @@ source:
   url:
     - https://cran.r-project.org/src/contrib/spatstat.utils_{{ version }}.tar.gz
     - https://cran.r-project.org/src/contrib/Archive/spatstat.utils/spatstat.utils_{{ version }}.tar.gz
-  sha256: 577811295b7269a20d0d72763639dd29e3226d86fbf03e2a230e41ec21e45bf2
+  sha256: 3aef50d0bb48dbc57c95b1fb7af37c400499200e9f38cced1462027fcb1afd79
 
 build:
   number: 0
