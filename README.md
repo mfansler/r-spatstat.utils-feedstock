@@ -3,7 +3,7 @@ About r-spatstat.utils
 
 Home: https://cran.r-project.org/web/packages/spatstat.utils
 
-Package license: GPL (>= 2)
+Package license: GPL-2.0-or-later
 
 Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/r-spatstat.utils-feedstock/blob/main/LICENSE.txt)
 
