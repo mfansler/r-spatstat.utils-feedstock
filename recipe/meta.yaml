@@ -1,5 +1,4 @@
 {% set version = "2.3-1" %}
-
 {% set posix = 'm2-' if win else '' %}
 {% set native = 'm2w64-' if win else '' %}
 
@@ -8,41 +7,47 @@ package:
   version: {{ version|replace("-", "_") }}
 
 source:
-  fn: spatstat.utils_{{ version }}.tar.gz
   url:
-    - https://cran.r-project.org/src/contrib/spatstat.utils_{{ version }}.tar.gz
-    - https://cran.r-project.org/src/contrib/Archive/spatstat.utils/spatstat.utils_{{ version }}.tar.gz
+    - {{ cran_mirror }}/src/contrib/spatstat.utils_{{ version }}.tar.gz
+    - {{ cran_mirror }}/src/contrib/Archive/spatstat.utils/spatstat.utils_{{ version }}.tar.gz
   sha256: 5b914308df0585993084b5e95967864eea0314c98ed6af58267b64b2235dfe22
 
 build:
-  merge_build_host: true  # [win]
-  number: 0
+  merge_build_host: True  # [win]
   script: R CMD INSTALL --build .
-  skip: true  # [win32]
+  number: 0
   rpaths:
     - lib/R/lib/
     - lib/
 
 requirements:
   build:
-    - posix  # [win]
-    - {{ compiler('c') }}        # [unix]
-    - {{ compiler('m2w64_c') }}  # [win]
+    - {{ compiler('c') }}              # [not win]
+    - {{ compiler('m2w64_c') }}        # [win]
+    - {{ posix }}filesystem        # [win]
+    - {{ posix }}make
+    - {{ posix }}sed               # [win]
+    - {{ posix }}coreutils         # [win]
+    - {{ posix }}zip               # [win]
+    - cross-r-base {{ r_base }}    # [build_platform != target_platform]
   host:
     - r-base
   run:
     - r-base
+    - {{ native }}gcc-libs         # [win]
 
 test:
   commands:
-    - $R -e "library('spatstat.utils')"  # [not win]
+    - $R -e "library('spatstat.utils')"           # [not win]
     - "\"%R%\" -e \"library('spatstat.utils')\""  # [win]
 
 about:
   home: https://cran.r-project.org/web/packages/spatstat.utils
-  license: GPL (>= 2)
-  license_file: {{ environ["PREFIX"] }}/lib/R/share/licenses/GPL-2
+  license: GPL-2.0-or-later
   summary: Contains utility functions for the 'spatstat' package which may also be useful for other purposes.
+  license_family: GPL2
+  license_file:
+    - {{ environ["PREFIX"] }}/lib/R/share/licenses/GPL-2
 
 extra:
   recipe-maintainers:
