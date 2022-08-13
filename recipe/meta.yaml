@@ -15,15 +15,16 @@ source:
 build:
   merge_build_host: True  # [win]
   script: R CMD INSTALL --build .
-  number: 0
+  number: 1
   rpaths:
     - lib/R/lib/
     - lib/
 
 requirements:
   build:
-    - {{ compiler('c') }}              # [not win]
-    - {{ compiler('m2w64_c') }}        # [win]
+    - cross-r-base {{ r_base }}    # [build_platform != target_platform]
+    - {{ compiler('c') }}          # [not win]
+    - {{ compiler('m2w64_c') }}    # [win]
     - {{ posix }}filesystem        # [win]
     - {{ posix }}make
     - {{ posix }}sed               # [win]
@@ -53,3 +54,4 @@ extra:
   recipe-maintainers:
     - conda-forge/r
     - ocefpaf
+    - mfansler
