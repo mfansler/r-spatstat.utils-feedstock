@@ -15,7 +15,7 @@ source:
 build:
   merge_build_host: True                          # [win]
   script: R CMD INSTALL --build .                 # [not arm64]
-  script: R CMD INSTALL --no-test-load --build .  # [arm64]
+  script: R CMD INSTALL --no-test-load --no-staged-install --build .  # [arm64]
   number: 1
   rpaths:
     - lib/R/lib/
